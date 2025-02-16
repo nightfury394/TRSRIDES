@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Booking {
+  id              String        @id @default(cuid())
+  userEmail       String
+  serviceType     String
+  pickupLocation  String
+  dropoffLocation String
+  pickupDate      DateTime
+  pickupTime      String
+  selectedVehicle String
+  fare            Float
+  status          BookingStatus @default(NEW)
+  createdAt       DateTime      @default(now())
+}
+
+model Vehicle {
+  id                String   @id @default(cuid())
+  name              String
+  namePl            String?
+  desc              String
+  descPl            String?
+  image             String
+  category          String
+  basePrice         Float
+  pricePerKm        Float
+  passengerCapacity Int?
+  luggageCapacity   Int?
+  cargoCapacity     String?
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+enum BookingStatus {
+  NEW
+  START
+  COMPLETE
+}

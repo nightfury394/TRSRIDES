@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `Vehicle` ADD COLUMN `descPl` VARCHAR(191) NULL,
+    ADD COLUMN `namePl` VARCHAR(191) NULL;
