@@ -35,23 +35,6 @@ export default function ChauffeurService() {
         </div>
       </section>
 
-      {/* Services Section */}
-      <section className="py-16 bg-white">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl font-bold text-center mb-12">{t.services.title}</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            {t.services.items.map((service, index) => (
-              <Card key={index}>
-                <CardHeader>
-                  <CardTitle>{service.title}</CardTitle>
-                  <CardDescription>{service.description}</CardDescription>
-                </CardHeader>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Why Choose Us Section */}
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
