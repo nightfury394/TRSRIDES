@@ -38,7 +38,7 @@ export async function POST(request: Request) {
     await resend.emails
       .send({
         from: "TRS Rides Bookings <info@trsrides.com>",
-        to: "mmlrana00@gmail.com",
+        to: "info@trsrides.com",
         subject: "New Booking Received - TRS Rides",
         html: adminNotificationEmail(booking),
       })
