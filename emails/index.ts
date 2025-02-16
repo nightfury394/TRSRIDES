@@ -43,7 +43,7 @@ export const userConfirmationEmail = (booking: any) => `
         <li><span class="highlight">Vehicle:</span> ${
           booking.selectedVehicle
         }</li>
-        <li><span class="highlight">Fare:</span> $${booking.fare.toFixed(
+        <li><span class="highlight">Fare:</span> PLN${booking.fare.toFixed(
           2
         )}</li>
       </ul>
