@@ -13,6 +13,7 @@ import { MapPin, CalendarIcon, Clock } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { format } from "date-fns"
 import { useRouter } from "next/navigation"
+import { useGoogleMapsApi, searchLocations, calculateDistance } from "./GoogleMapsScript"
 
 const translations = {
   en: {
@@ -41,62 +42,80 @@ const translations = {
   },
 }
 
-// Mock function to simulate location search
-const searchLocations = async (query: string): Promise<string[]> => {
-  // In a real app, this would be an API call to a geocoding service
-  await new Promise((resolve) => setTimeout(resolve, 300)) // Simulate API delay
-  return [`${query} Street`, `${query} Avenue`, `${query} Boulevard`, `${query} Square`, `${query} Park`]
-}
-
 export function BookingForm() {
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const language = useSelector((state: RootState) => state.language.current);
-  const booking = useSelector((state: RootState) => state.booking);
-  const t = translations[language];
+  const isGoogleMapsLoaded = useGoogleMapsApi()
+  const dispatch = useDispatch()
+  const router = useRouter()
+  const language = useSelector((state: RootState) => state.language.current)
+  const booking = useSelector((state: RootState) => state.booking)
+  const t = translations[language]
 
-  const [date, setDate] = useState<Date>();
-  const [pickupInput, setPickupInput] = useState("");
-  const [dropoffInput, setDropoffInput] = useState("");
-  const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([]);
-  const [dropoffSuggestions, setDropoffSuggestions] = useState<string[]>([]);
+  const [date, setDate] = useState<Date>()
+  const [pickupInput, setPickupInput] = useState("")
+  const [dropoffInput, setDropoffInput] = useState("")
+  const [pickupSuggestions, setPickupSuggestions] = useState<string[]>([])
+  const [dropoffSuggestions, setDropoffSuggestions] = useState<string[]>([])
 
   const handleLocationSearch = async (query: string, type: "pickup" | "dropoff") => {
-    if (query.length > 2) {
-      const results = await searchLocations(query);
-      if (type === "pickup") {
-        setPickupSuggestions(results);
-      } else {
-        setDropoffSuggestions(results);
+    if (query.length > 2 && isGoogleMapsLoaded) {
+      try {
+        const results = await searchLocations(query)
+        if (type === "pickup") {
+          setPickupSuggestions(results)
+        } else {
+          setDropoffSuggestions(results)
+        }
+      } catch (error) {
+        console.error("Error searching locations:", error)
       }
     } else {
       if (type === "pickup") {
-        setPickupSuggestions([]);
+        setPickupSuggestions([])
       } else {
-        setDropoffSuggestions([]);
+        setDropoffSuggestions([])
       }
     }
-  };
+  }
 
-  const handleLocationSelect = (location: string, type: "pickup" | "dropoff") => {
-    dispatch(setBookingDetails({ [`${type}Location`]: { address: location } }));
+  const handleLocationSelect = async (location: string, type: "pickup" | "dropoff") => {
+    dispatch(setBookingDetails({ [`${type}Location`]: { address: location } }))
 
     if (type === "pickup") {
-      setPickupInput(location);
-      setPickupSuggestions([]);
+      setPickupInput(location)
+      setPickupSuggestions([])
     } else {
-      setDropoffInput(location);
-      setDropoffSuggestions([]);
+      setDropoffInput(location)
+      setDropoffSuggestions([])
     }
-  };
+
+    // Calculate distance if both pickup and dropoff locations are set
+    if (booking.pickupLocation && booking.dropoffLocation) {
+      try {
+        const distance = await calculateDistance(
+          type === "pickup" ? location : booking.pickupLocation.address,
+          type === "dropoff" ? location : booking.dropoffLocation.address,
+        )
+        dispatch(setBookingDetails({ distance }))
+      } catch (error) {
+        console.error("Error calculating distance:", error)
+      }
+    }
+  }
 
   const handleBookNow = () => {
     if (booking.pickupLocation && booking.dropoffLocation && booking.pickupDate && booking.pickupTime) {
-      router.push("/vehicle-selection");
+      router.push("/vehicle-selection")
     } else {
-      alert("Please fill in all required fields");
+      alert("Please fill in all required fields")
     }
-  };
+  }
+
+  const renderDistance = () => {
+    if (booking.distance) {
+      return <div className="text-sm text-gray-600 mt-2">Estimated distance: {booking.distance.toFixed(2)} km</div>
+    }
+    return null
+  }
 
   return (
     <Card className="max-w-3xl mx-auto">
@@ -121,8 +140,8 @@ export function BookingForm() {
                 className="pl-10"
                 value={pickupInput} // Bind input value
                 onChange={(e) => {
-                  setPickupInput(e.target.value);
-                  handleLocationSearch(e.target.value, "pickup");
+                  setPickupInput(e.target.value)
+                  handleLocationSearch(e.target.value, "pickup")
                 }}
               />
               {pickupSuggestions.length > 0 && (
@@ -148,8 +167,8 @@ export function BookingForm() {
                 className="pl-10"
                 value={dropoffInput} // Bind input value
                 onChange={(e) => {
-                  setDropoffInput(e.target.value);
-                  handleLocationSearch(e.target.value, "dropoff");
+                  setDropoffInput(e.target.value)
+                  handleLocationSearch(e.target.value, "dropoff")
                 }}
               />
               {dropoffSuggestions.length > 0 && (
@@ -166,6 +185,7 @@ export function BookingForm() {
                 </ul>
               )}
             </div>
+            {renderDistance()}
           </div>
 
           <div className="grid grid-cols-2 gap-4">
@@ -181,8 +201,8 @@ export function BookingForm() {
                   mode="single"
                   selected={date}
                   onSelect={(date) => {
-                    setDate(date);
-                    dispatch(setBookingDetails({ pickupDate: date?.toISOString() }));
+                    setDate(date)
+                    dispatch(setBookingDetails({ pickupDate: date?.toISOString() }))
                   }}
                   initialFocus
                 />
@@ -205,8 +225,6 @@ export function BookingForm() {
         </div>
       </CardContent>
     </Card>
-  );
+  )
 }
-
-
 

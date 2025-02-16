@@ -64,7 +64,6 @@ export default function VehicleSelection() {
   const router = useRouter()
   const language = useSelector((state: RootState) => state.language.current)
   const booking = useSelector((state: RootState) => state.booking)
-  console.log("booking", booking)
   const t = translations[language]
 
   const [selectedVehicle, setSelectedVehicle] = useState<string | null>(null)
@@ -87,8 +86,6 @@ export default function VehicleSelection() {
   useEffect(() => {
     fetchVehicles()
   }, [])
-
-  console.log("vv", vehicles)
 
   useEffect(() => {
     if (booking.pickupLocation && booking.dropoffLocation) {

@@ -25,24 +25,19 @@ export async function POST(request: Request) {
     });
 
     // Send confirmation email to user
-    console.log("booking", booking);
-    await resend.emails
-      .send({
-        from: "TRS Rides <info@trsrides.com>",
-        to: booking.userEmail,
-        subject: "Your TRS Rides Booking Confirmation",
-        html: userConfirmationEmail(booking),
-      })
-      .then((res) => console.log("res user", res));
+    await resend.emails.send({
+      from: "TRS Rides <info@trsrides.com>",
+      to: booking.userEmail,
+      subject: "Your TRS Rides Booking Confirmation",
+      html: userConfirmationEmail(booking),
+    });
     // Send notification email to admin
-    await resend.emails
-      .send({
-        from: "TRS Rides Bookings <info@trsrides.com>",
-        to: "info@trsrides.com",
-        subject: "New Booking Received - TRS Rides",
-        html: adminNotificationEmail(booking),
-      })
-      .then((res) => console.log("res admin", res));
+    await resend.emails.send({
+      from: "TRS Rides Bookings <info@trsrides.com>",
+      to: "info@trsrides.com",
+      subject: "New Booking Received - TRS Rides",
+      html: adminNotificationEmail(booking),
+    });
 
     return NextResponse.json({ success: true });
   } catch (error) {

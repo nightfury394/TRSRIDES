@@ -13,6 +13,7 @@ type BookingState = {
   pickupDate: string | null;
   pickupTime: string | null;
   fare: number;
+  distance?: number;
 };
 
 const initialState: BookingState = {
@@ -22,6 +23,7 @@ const initialState: BookingState = {
   pickupDate: null,
   pickupTime: null,
   fare: 0,
+  distance: 0,
 };
 
 export const bookingSlice = createSlice({
