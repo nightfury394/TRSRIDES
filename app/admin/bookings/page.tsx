@@ -29,7 +29,7 @@ export default function AdminBookings() {
                         <Calendar className="h-4 w-4 text-muted-foreground" />
                     </CardHeader>
                     <CardContent>
-                        <div className="text-2xl font-bold">{bookings.length}</div>
+                        <div className="text-2xl font-bold">{bookings?.length}</div>
                         <p className="text-xs text-muted-foreground">+20.1% from last month</p>
                     </CardContent>
                 </Card>
