@@ -158,7 +158,7 @@ export default function AdminVehicles() {
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
-                                {vehicles.map((vehicle) => (
+                                {vehicles?.map((vehicle) => (
                                     <TableRow key={vehicle.id} className="h-10">
                                         <TableCell><Image
                                             src={vehicle.image || "/placeholder.svg"}

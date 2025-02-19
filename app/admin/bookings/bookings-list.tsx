@@ -54,7 +54,7 @@ export default function BookingsList({ initialBookings }: BookingsListProps) {
             })
 
             if (response.ok) {
-                setBookings(bookings.map((booking) => (booking.id === bookingId ? { ...booking, status: newStatus } : booking)))
+                setBookings(bookings?.map((booking) => (booking.id === bookingId ? { ...booking, status: newStatus } : booking)))
                 router.refresh()
             }
         } catch (error) {
@@ -119,7 +119,7 @@ export default function BookingsList({ initialBookings }: BookingsListProps) {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {filteredBookings.map((booking) => (
+                            {filteredBookings?.map((booking) => (
                                 <TableRow key={booking.id}>
                                     <TableCell className="font-medium">{booking.userEmail}</TableCell>
                                     <TableCell className="capitalize">{booking.serviceType}</TableCell>
