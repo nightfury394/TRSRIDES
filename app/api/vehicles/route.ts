@@ -1,7 +1,29 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient({
+  log: [
+    { level: "query", emit: "event" },
+    { level: "warn", emit: "event" },
+    { level: "error", emit: "event" },
+  ],
+});
+
+// Log Prisma queries
+prisma.$on("query", (e) => {
+  console.log("Query:", e.query);
+  console.log("Params:", e.params);
+});
+
+// Log Prisma warnings
+prisma.$on("warn", (e) => {
+  console.warn("Warning:", e.message);
+});
+
+// Log Prisma errors
+prisma.$on("error", (e) => {
+  console.error("Error:", e.message);
+});
 
 export async function GET(request: Request) {
   const url = new URL(request.url);
@@ -13,28 +35,29 @@ export async function GET(request: Request) {
         createdAt: "desc",
       },
     });
-    const translatedVehicles = vehicles.map((vehicle) => {
-      return {
-        id: vehicle.id,
-        name: vehicle.name,
-        desc: lang === "pl" ? vehicle.descPl ?? vehicle.desc : vehicle.desc,
-        image: vehicle.image,
-        category: vehicle.category,
-        basePrice: vehicle.basePrice,
-        pricePerKm: vehicle.pricePerKm,
-        passengerCapacity: vehicle.passengerCapacity,
-        luggageCapacity: vehicle.luggageCapacity,
-        cargoCapacity: vehicle.cargoCapacity,
-      };
-    });
+
+    const translatedVehicles = vehicles.map((vehicle) => ({
+      id: vehicle.id,
+      name: vehicle.name,
+      desc: lang === "pl" ? vehicle.descPl ?? vehicle.desc : vehicle.desc,
+      image: vehicle.image,
+      category: vehicle.category,
+      basePrice: vehicle.basePrice,
+      pricePerKm: vehicle.pricePerKm,
+      passengerCapacity: vehicle.passengerCapacity,
+      luggageCapacity: vehicle.luggageCapacity,
+      cargoCapacity: vehicle.cargoCapacity,
+    }));
 
     return NextResponse.json(translatedVehicles);
   } catch (error) {
+    console.error("Error fetching vehicles:", error);
     return NextResponse.json(
       { error: "Failed to fetch vehicles" },
       { status: 500 }
     );
   } finally {
+    // Always disconnect Prisma after the request
     await prisma.$disconnect();
   }
 }
@@ -77,8 +100,6 @@ export async function POST(request: Request) {
     // Translate fields
     const namePl = await translateText(body.name);
     const descPl = await translateText(body.desc);
-    console.log("pl", descPl);
-
     const vehicle = await prisma.vehicle.create({
       data: {
         name: body.name,
