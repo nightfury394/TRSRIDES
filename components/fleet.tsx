@@ -12,13 +12,14 @@ export function Fleet() {
 
   const fetchVehicles = async () => {
     try {
-      const response = await fetch(`/api/vehicles?lang=${language}`)
-      if (!response.ok) {
-        throw new Error("Failed to fetch vehicles")
-      }
-      const data = await response.json()
-      setVehicles(data)
+      const response = await fetch(`/api/vehicles?lang=${language}`).then((res) => console.log("res", res))
+      // if (!response.ok) {
+      //   throw new Error("Failed to fetch vehicles")
+      // }
+      // const data = await response.json()
+      // setVehicles(data)
     } catch (error) {
+      console.log
       toast.error("Failed to fetch vehicles. Please try again.")
     }
   }
