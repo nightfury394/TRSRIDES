@@ -1,14 +1,23 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import Cookies from "js-cookie"
+
 
 export default function AdminLogin() {
     const router = useRouter()
     const [error, setError] = useState("")
+
+    // Check if already authenticated
+    useEffect(() => {
+        if (Cookies.get("admin_session")) {
+            router.push("/admin/bookings")
+        }
+    }, [router])
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -17,6 +26,7 @@ export default function AdminLogin() {
         const password = formData.get("password")
 
         if (email === "info@trsrides.com" && password === "admin123") {
+            Cookies.set("admin_session", "true", { expires: 7 })
             router.push("/admin/bookings")
         } else {
             setError("Invalid credentials")

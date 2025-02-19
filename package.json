@@ -54,6 +54,7 @@
     "gcp-metadata": "latest",
     "google-maps": "^4.3.3",
     "input-otp": "1.4.1",
+    "js-cookie": "^3.0.5",
     "kerberos": "latest",
     "leaflet": "latest",
     "lucide-react": "^0.454.0",
