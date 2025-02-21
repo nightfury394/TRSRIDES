@@ -76,10 +76,14 @@ export function Navigation() {
   return (
     <nav className="bg-white border-b-4 border-gray-900">
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-24">
+        <div className="flex items-center justify-between h-12 md:h-24">
           <div className="flex items-center">
             <Link href="/" className="text-xl font-bold">
-              <img src="/logo.jpg" alt="TRS Rides" className="w-[100px]" />
+              <img
+                src="/logo.jpg"
+                alt="TRS Rides"
+                className="w-[50px] md:w-[100px]"
+              />
             </Link>
           </div>
 
