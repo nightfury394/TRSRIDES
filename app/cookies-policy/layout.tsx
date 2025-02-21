@@ -1,8 +1,14 @@
-import { Navigation } from "@/components/navigation"
-import { Footer } from "@/components/ui/Footer"
-import type { ReactNode } from "react"
+import ContactSupport from "@/components/ContactSupport";
+import { Navigation } from "@/components/navigation";
+import { Footer } from "@/components/ui/Footer";
+import type { ReactNode } from "react";
 
 export default function CookiesLayout({ children }: { children: ReactNode }) {
-  return <><Navigation />{children}<Footer /></>
+  return (
+    <>
+      <Navigation />
+      {children}
+      <Footer /> <ContactSupport />
+    </>
+  );
 }
-

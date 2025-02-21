@@ -1,15 +1,20 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useSelector, useDispatch } from "react-redux"
-import { setLanguage } from "@/store/slices/languageSlice"
-import { Button } from "@/components/ui/button"
-import type { RootState } from "@/store/store"
-import { ChevronDown, Menu, X } from "lucide-react"
-import Link from "next/link"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
-import { chauffeurServices } from "@/app/data/chauffeur-services"
-import { logisticsServices } from "@/app/data/logistics-services"
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setLanguage } from "@/store/slices/languageSlice";
+import { Button } from "@/components/ui/button";
+import type { RootState } from "@/store/store";
+import { ChevronDown, Menu, X } from "lucide-react";
+import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { chauffeurServices } from "@/app/data/chauffeur-services";
+import { logisticsServices } from "@/app/data/logistics-services";
 
 const translations = {
   en: {
@@ -60,13 +65,13 @@ const translations = {
       specializedTransport: "Transport Specjalistyczny",
     },
   },
-}
+};
 
 export function Navigation() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const dispatch = useDispatch()
-  const language = useSelector((state: RootState) => state.language.current)
-  const t = translations[language]
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+  const language = useSelector((state: RootState) => state.language.current);
+  const t = translations[language];
 
   return (
     <nav className="bg-white border-b-4 border-gray-900">
@@ -112,7 +117,9 @@ export function Navigation() {
                     <DropdownMenuContent>
                       {chauffeurServices.map((service) => (
                         <DropdownMenuItem key={service.id}>
-                          <Link href={`/services/chauffeur/${service.id}`}>{t.chauffeurOptions[service.titleKey]}</Link>
+                          <Link href={`/services/chauffeur/${service.id}`}>
+                            {t.chauffeurOptions[service.titleKey]}
+                          </Link>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
@@ -126,7 +133,9 @@ export function Navigation() {
                     <DropdownMenuContent>
                       {logisticsServices.map((service) => (
                         <DropdownMenuItem key={service.id}>
-                          <Link href={`/services/logistics/${service.id}`}>{t.logisticsOptions[service.titleKey]}</Link>
+                          <Link href={`/services/logistics/${service.id}`}>
+                            {t.logisticsOptions[service.titleKey]}
+                          </Link>
                         </DropdownMenuItem>
                       ))}
                     </DropdownMenuContent>
@@ -134,10 +143,7 @@ export function Navigation() {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <a href="#fleet" className="text-gray-600 hover:text-gray-900">
-              {t.fleet}
-            </a>
-            <a href="#contact" className="text-gray-600 hover:text-gray-900">
+            <a href="/contact-us" className="text-gray-600 hover:text-gray-900">
               {t.contact}
             </a>
             <Button>{t.book}</Button>
@@ -145,8 +151,16 @@ export function Navigation() {
 
           {/* Mobile menu button */}
           <div className="md:hidden">
-            <Button variant="ghost" size="icon" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </Button>
           </div>
         </div>
@@ -174,7 +188,10 @@ export function Navigation() {
                     <DropdownMenuContent>
                       {chauffeurServices.map((service) => (
                         <DropdownMenuItem key={service.id}>
-                          <Link href={`/services/chauffeur/${service.id}`} className="w-full">
+                          <Link
+                            href={`/services/chauffeur/${service.id}`}
+                            className="w-full"
+                          >
                             {t.chauffeurOptions[service.titleKey]}
                           </Link>
                         </DropdownMenuItem>
@@ -190,7 +207,10 @@ export function Navigation() {
                     <DropdownMenuContent>
                       {logisticsServices.map((service) => (
                         <DropdownMenuItem key={service.id}>
-                          <Link href={`/services/logistics/${service.id}`} className="w-full">
+                          <Link
+                            href={`/services/logistics/${service.id}`}
+                            className="w-full"
+                          >
                             {t.logisticsOptions[service.titleKey]}
                           </Link>
                         </DropdownMenuItem>
@@ -219,7 +239,5 @@ export function Navigation() {
         </div>
       )}
     </nav>
-  )
+  );
 }
-
-

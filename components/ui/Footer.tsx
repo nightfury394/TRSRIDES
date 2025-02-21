@@ -92,48 +92,50 @@ const Footer = () => {
     return (
         <footer className="w-full bg-gray-900 text-white">
             {/* Top Info Section */}
-            <div className="container mx-auto px-4 py-8 grid grid-cols-1 md:grid-cols-3 gap-8 border-b border-gray-700">
-                <div className="flex items-center gap-4 justify-center">
-                    <MapPin className="w-12 h-12 text-gray-400 flex-shrink-0" />
+            <div className="container mx-auto justify-center px-4 py-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 border-b border-gray-700">
+                <div className="flex justify-center md:justify-center items-center gap-3 sm:gap-4">
+                    <MapPin className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 flex-shrink-0" />
                     <div>
-                        <h3 className="text-lg font-semibold mb-1">ADDRESS</h3>
-                        <p className="text-gray-300">{t.address}</p>
+                        <h3 className="text-base sm:text-lg font-semibold mb-1 text-center sm:text-left">ADDRESS</h3>
+                        <p className="text-gray-300 text-sm sm:text-base">{t.address}</p>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 justify-center">
-                    <Phone className="w-12 h-12 text-gray-400 flex-shrink-0" />
+                <div className="flex justify-center md:justify-center items-center gap-3 sm:gap-4">
+                    <Phone className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 flex-shrink-0" />
                     <div>
-                        <h3 className="text-lg font-semibold mb-1">PHONES</h3>
-                        <a href={`tel:${t.phone}`} className="text-gray-300 hover:text-white">
+                        <h3 className="text-base sm:text-lg font-semibold mb-1 text-center sm:text-left">PHONES</h3>
+                        <a href={`tel:${t.phone}`} className="text-gray-300 hover:text-white text-sm sm:text-base">
                             {t.phone}
                         </a>
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 justify-center">
-                    <Clock className="w-12 h-12 text-gray-400 flex-shrink-0" />
+                <div className="flex justify-center md:justify-center items-center gap-3 sm:gap-4">
+                    <Clock className="w-8 h-8 sm:w-12 sm:h-12 text-gray-400 flex-shrink-0" />
                     <div>
-                        <h3 className="text-lg font-semibold mb-1">WORKING HOURS</h3>
-                        <p className="text-gray-300">{t.timing}</p>
+                        <h3 className="text-base sm:text-lg font-semibold mb-1 text-center sm:text-left">WORKING HOURS</h3>
+                        <p className="text-gray-300 text-sm sm:text-base">{t.timing}</p>
                     </div>
                 </div>
             </div>
 
             {/* Main Footer Content */}
             <div className="container mx-auto px-4 py-12">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 text-center md:text-left">
                     {/* About Section */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 text-white  border-gray-700 pb-2">{t.about}</h3>
-                        <img src="/logo.jpg" alt="TRS Rides" className="w-32 h-32 mb-4" />
-                        <p className="text-gray-300 leading-relaxed">{t.description}</p>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white border-b border-gray-700 pb-2">{t.about}</h3>
+                        <div className="flex justify-center md:justify-start">
+                            <img src="/logo.jpg" alt="TRS Rides" className="w-28 h-28 sm:w-32 sm:h-32 mb-4" />
+                        </div>
+                        <p className="text-gray-300 text-sm sm:text-base leading-relaxed">{t.description}</p>
                     </div>
 
                     {/* Services Section */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 text-white  border-gray-700 pb-2">{t.services}</h3>
-                        <ul className="text-gray-300 space-y-2">
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white border-b border-gray-700 pb-2">{t.services}</h3>
+                        <ul className="text-gray-300 text-sm sm:text-base space-y-2">
                             <li>Airport Transfers</li>
                             <li>City Tours</li>
                             <li>Corporate Services</li>
@@ -143,17 +145,17 @@ const Footer = () => {
 
                     {/* Contact Section */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 text-white  border-gray-700 pb-2">{t.contact}</h3>
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white border-b border-gray-700 pb-2">{t.contact}</h3>
                         <div className="space-y-3">
-                            <p className="text-gray-300 flex items-center gap-2">
+                            <p className="text-gray-300 flex items-center justify-center md:justify-start gap-2 text-sm sm:text-base">
                                 <MapPin className="w-5 h-5" />
                                 {t.address}
                             </p>
-                            <p className="text-gray-300 flex items-center gap-2">
+                            <p className="text-gray-300 flex items-center justify-center md:justify-start gap-2 text-sm sm:text-base">
                                 <Phone className="w-5 h-5" />
                                 {t.phone}
                             </p>
-                            <p className="text-gray-300 flex items-center gap-2">
+                            <p className="text-gray-300 flex items-center justify-center md:justify-start gap-2 text-sm sm:text-base">
                                 <Mail className="w-5 h-5" />
                                 {t.email}
                             </p>
@@ -162,8 +164,8 @@ const Footer = () => {
 
                     {/* GDPR Section */}
                     <div>
-                        <h3 className="text-xl font-semibold mb-4 text-white  border-gray-700 pb-2">GDPR</h3>
-                        <ul className="text-gray-300 space-y-2">
+                        <h3 className="text-lg sm:text-xl font-semibold mb-3 sm:mb-4 text-white border-b border-gray-700 pb-2">GDPR</h3>
+                        <ul className="text-gray-300 text-sm sm:text-base space-y-2">
                             <li>
                                 <a href="/privacy-policy" className="hover:text-white">
                                     {t.privacyPolicy}
@@ -183,6 +185,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
+
 
             {/* Copyright Section */}
             <div className="border-t border-gray-700">

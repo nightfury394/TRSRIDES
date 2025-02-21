@@ -1,6 +1,7 @@
 "use client"
 
 import { BookingForm } from "@/components/booking-form"
+import ContactSupport from "@/components/ContactSupport"
 import { Fleet } from "@/components/fleet"
 import { Navigation } from "@/components/navigation"
 import { Services } from "@/components/services"
@@ -12,15 +13,12 @@ import { store } from "@/store/store"
 import { MessageCircle, Phone, X } from "lucide-react";
 import Image from "next/image"
 import Link from "next/link"
-import { useState } from "react"
 import { Provider } from "react-redux"
 import Typewriter from 'typewriter-effect';
 
 
 export default function Home() {
-  const [isOpen, setIsOpen] = useState(false);
-  const whatsappLink = "https://wa.me/1234567890";
-  const phoneNumber = "tel:+1234567890";
+
   return (
     <Provider store={store}>
       <Header />
@@ -93,35 +91,7 @@ export default function Home() {
             </div>
           </section>
           <Footer />
-          <div className="fixed bottom-6 right-6 flex flex-col items-end gap-2">
-            {/* Contact Options (Show when isOpen is true) */}
-            {isOpen && (
-              <div className="flex flex-col items-end gap-2 mb-2">
-                <Link
-                  href={phoneNumber}
-                  className="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition flex items-center gap-2"
-                >
-                  <Phone size={24} />
-                </Link>
-                <Link
-                  href={whatsappLink}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-green-500 text-white p-3 rounded-full shadow-lg hover:bg-green-600 transition flex items-center gap-2"
-                >
-                  <MessageCircle size={24} />
-                </Link>
-              </div>
-            )}
-
-            {/* Floating Button (Toggles Contact Options) */}
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className=" text-white p-4 rounded-full shadow-lg hover:bg-gray-900  text-gra-900 hover:text-whitetransition flex items-center justify-center"
-            >
-              {isOpen ? <X size={24} /> : <MessageCircle size={24} />}
-            </button>
-          </div>
+          <ContactSupport />
         </main>
       </div>
     </Provider>

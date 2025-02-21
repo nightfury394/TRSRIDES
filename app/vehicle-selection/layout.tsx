@@ -1,6 +1,7 @@
 "use client"
+import ContactSupport from "@/components/ContactSupport"
 import { Navigation } from "@/components/navigation"
-import { Header } from "@/components/ui/Footer"
+import { Footer, Header } from "@/components/ui/Footer"
 import type React from "react"
 
 export default function Layout({
@@ -18,7 +19,10 @@ export default function Layout({
                         <div className="container mx-auto px-6 py-8">{children}</div>
                     </main>
                 </div>
+                <Footer />
             </div>
+
+            <ContactSupport />
         </div>
     )
 }
